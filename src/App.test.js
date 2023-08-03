@@ -13,27 +13,51 @@ test('App should render', () => {
   expect(screen.getByText('Welcome, party people!')).toBeInTheDocument();
 });
 
+// -------------------------------------------------------------------------------------------------------------------
+
 test('Button should render', () => {
-  // TODO: change the expect to actually test something 😉
-  expect('no test written').toBe('tested');
+  // render = setting up a test UI that can be used to check if things are showing up the way you expect them to.
+  render(<App />);
+  expect(screen.getByText("Current theme: light")).toBeInTheDocument();
+  expect(screen.getByText("Show hidden content")).toBeInTheDocument();
 });
+
+// -------------------------------------------------------------------------------------------------------------------
 
 /**
  * Verify clicking button should change theme
  * hint: use fireEvent.click(element) to trigger a click event on an element
  */
 test('theme button should update button text', () => {
-  // TODO: change the expect to actually test something 😉
-  expect('no test written').toBe('tested');
+  // render the app.
+  render(<App />);
+
+  expect(screen.getByText("Current theme: light")).toBeInTheDocument();
+
+  // go to screen, get the element called "Current theme: light", and click on it (fire event).
+  fireEvent.click(screen.getByText("Current theme: light"))
+  // check if test passes.
+  expect(screen.getByText("Current theme: dark")).toBeInTheDocument();
 });
+
+// -------------------------------------------------------------------------------------------------------------------
 
 // BONUS
 // hint: there is a `.toHaveStyle` method.
 // e.g.: expect(element).toHaveStyle('color: #FFF');
 test('theme button should toggle styles', () => {
-  // TODO: change the expect to actually test something 😉
-  expect('no test written').toBe('tested');
+  render(<App />);
+
+  // tests background color to see if it's light.
+  expect(document.body).toHaveStyle('backgroundColor: #FFF')
+
+  // tests background color to see if it's dark.
+  fireEvent.click(screen.getByText("Current theme: light"))
+  expect(document.body).toHaveStyle('backgroundColor: #333')
+
 });
+
+// -------------------------------------------------------------------------------------------------------------------
 
 /**
  * Verify clicking button should toggle hidden content
@@ -46,7 +70,17 @@ test('theme button should toggle styles', () => {
  */
 test('hidden button should toggle hidden content', () => {
   // TODO: change the expect to actually test something 😉
-  expect('no test written').toBe('tested');
+  render(<App />);
+
+  // ensures "Show hidden content" button renders.
+  expect(screen.getByText('Show hidden content')).toBeInTheDocument();
+  // ensures "this content is hidden by default" is NOT showing.
+  expect(screen.queryByText('this content is hidden by default')).not.toBeInTheDocument();
+
+  // 
+  fireEvent.click(screen.getByText("Show hidden content"))
+  expect(screen.getByText('Hide hidden content')).toBeInTheDocument();
+  expect(screen.getByText('this content is hidden by default')).toBeInTheDocument();
 });
 
 

@@ -16,6 +16,8 @@ function App() {
   const color = theme === 'light' ? '#333' : '#FFF';
   const backgroundColor = theme === 'light' ? '#FFF' : '#333';
 
+  // document = entire page. contains the body + other non-visible things.
+  // body = main HTML element that holds all visible content on a page.
   document.body.style.color = color;
   document.body.style.backgroundColor = backgroundColor;
 
